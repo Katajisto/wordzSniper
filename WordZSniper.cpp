@@ -5,7 +5,7 @@
 #include <string>
 using namespace std;
 int index = 0;
-
+vector<int> foundIndex = {};
 vector<int> nolla = { 1,5,4 };
 vector<int> yksi = { 0,4,5,6,2 };
 vector<int> kaksi = { 1,5,6,7,3 };
@@ -24,33 +24,79 @@ vector<int> neljatoista = { 13,9,10,11,15 };
 vector<int> viisitoista = { 14,10,11 };
 vector<vector<int>> positions = { nolla,yksi,kaksi,kolme,nelja,viisi,kuusi,seitseman,kahdeksan,seitseman,kahdeksan,yhdeksan,kymmenen,yksitoista,kaksitoista,kolmetoista,neljatoista,viisitoista };
 vector<char> word = {};
-vector<char> grid = { 'a', 'x','x','x','u','z','x','x','t','x','x','x','i','x','x','x' };
-string sana = "Hur Dur";
+vector<char> grid = {};
+vector<int> goodTiles = {};
+int gridIndex = 0;
+string sana = "hello";
 int rangeIndex = 0;
+char gridTempChar = ' ';
 bool rangeBool = false;
+void searchGrid(char letter)
+{
+	gridIndex = 0;
+	for (char tile : grid)
+	{
+		if (tile == word[0])
+		{
+			goodTiles.push_back(gridIndex);
+		}
+		gridIndex++;
+	}
+}
+void makeGrid()
+{
+	cout << "Please enter the letters for the grid!" << endl;
+	cout << "Row 1: ";
+	for (int count = 1; count <= 4; count++)
+	{
+		cin >> gridTempChar;
+		grid.push_back(gridTempChar);
+	}
+	cout << "Row 1 set" << endl;
+	cout << endl;
+	for (int count = 1; count <= 4; count++)
+	{
+		cin >> gridTempChar;
+		grid.push_back(gridTempChar);
+	}
+	cout << "Row 2 set" << endl;
+	cout << endl;
+	for (int count = 1; count <= 4; count++)
+	{
+		cin >> gridTempChar;
+		grid.push_back(gridTempChar);
+	}
+	cout << "Row 3 set" << endl;
+	cout << endl;
+	for (int count = 1; count <= 4; count++)
+	{
+		cin >> gridTempChar;
+		grid.push_back(gridTempChar);
+	}
+	cout << endl << "Grid set!" << endl;
+}
+
 bool existsInRange(vector<int> pos, char target)
 {
 	rangeIndex = 0;
 	rangeBool = false;
+	foundIndex = {};
 	for (int i : pos)
 	{
 		if (grid[i] == target)
 		{
-			cout << "Found " << target << " at index " << pos[rangeIndex] << endl;
 			rangeBool = true;
+			foundIndex.push_back(pos[rangeIndex]);
  		}
 		rangeIndex++;
+		
+	}
+	cout << "Found the reguested chars in the following indexes: " << endl;
+	for (int found : foundIndex)
+	{
+		cout << found << endl;
 	}
 	return rangeBool;
-}
-bool isNear(int index, char letter)
-{
-	cout << "The current letter is" << grid[index] << endl;
-	if (index - 1 > 0 && index + 1 < 16)
-	{
-		cout << "next to it are the letters: " << grid[index - 1] << " & " << grid[index + 1] << endl;
-	}
-	return true;
 }
 void stringToVector(string var)
 {
@@ -61,8 +107,13 @@ void stringToVector(string var)
 }
 int main()
 {
-	
-	existsInRange(positions[1], 'z');
+	makeGrid();
+	stringToVector(sana);
+	searchGrid(word[0]);
+	for (int goodTile : goodTiles)
+	{
+		cout << goodTile << endl;
+	}
 	while (true);
 }
 
