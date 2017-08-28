@@ -1,39 +1,39 @@
-// WordZSniper.cpp : Defines the entry point for the console application.
-//
-
+/*
+Sanajahti Sniper. Programmed by Tuomas Katajisto. WORK IN PROGRESS.
+*/
 #include "stdafx.h"
 #include "iostream"
 #include <vector>
+#include <string>
 using namespace std;
-vector<char> word = { 'n','e','k','r' };
-vector<char> row1 = { '1','a','a','n' };
-vector<char> row2 = { '3','a','a','e' };
-vector<char> row3 = { '3','a','a','k' };
-vector<char> row4 = { '7','a','a','r' };
 int index = 0;
+vector<char> word = {};
+vector<char> grid = { 'a', 'x','x','x','u','x','x','x','t','x','x','x','i','x','x','x' };
+string sana = "Hur Dur";
+bool isNear(int index, char letter)
+{
+	cout << "The current letter is" << grid[index] << endl;
+	if (index - 1 > 0 && index + 1 < 16)
+	{
+		cout << "next to it are the letters: " << grid[index - 1] << " & " << grid[index + 1] << endl;
+	}
+	return true;
+}
+void stringToVector(string var)
+{
+	for (char letter : var)
+	{
+		word.push_back(letter);
+	}
+}
 int main()
 {
-
-	for (char letter : row1)
+	stringToVector(sana);
+	for (char x : word)
 	{
-		if (letter == word[0])
-		{
-			
-			if (row2[index] == word[1])
-			{
-				cout << "Found:" << word[1] << endl;
-				if (row3[index] == word[2])
-				{
-					cout << "Found:" << word[2] << endl;
-					if (row4[index] == word[3])
-					{
-						cout << "Found all of it" << endl;
-					}
-				}
-			}
-		}
-		++index;
+		cout << x << endl;
 	}
-	while (true) {}
+	isNear(3, 'h');
+	while (true);
 }
 
