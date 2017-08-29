@@ -110,24 +110,25 @@ void makeGrid()
 bool existsInRange(vector<int> pos, char target)
 {
 	rangeIndex = 0;
-	rangeBool = false;
+	bool exists;
 	foundIndex = {};
 	for (int i : pos)
 	{
 		if (grid[i] == target)
 		{
-			rangeBool = true;
+			latestIndex = i;
 			foundIndex.push_back(pos[rangeIndex]);
+			exists = true;
  		}
+		else
+		{
+			exists = false;
+		}
 		rangeIndex++;
 		
 	}
-	cout << "Found the reguested chars in the following indexes: " << endl;
-	for (int found : foundIndex)
-	{
-		cout << found << endl;
-	}
-	return rangeBool;
+
+	return exists;
 }
 void stringToVector(string var)
 {
@@ -155,18 +156,17 @@ bool findWord(string toFind)
 		{
 			if (counter != 0)
 			{
-				doesExist = existsInRange(positions[latestIndex], letter);
-				if (doesExist = true)
+				if (existsInRange(positions[latestIndex], letter))
 				{
 					latestIndex = counter;
 					cout << "Found letter: " << letter << endl;
 				}
-				if (doesExist = false)
+				else
 				{
 					return false;
 				}
 			}
-
+			
 			counter++;
 
 		}
