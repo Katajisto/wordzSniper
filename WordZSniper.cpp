@@ -5,10 +5,14 @@
 #include <string>
 using namespace std;
 int index = 0;
+//Variable for storing the index of the tile we are currently using
 int latestIndex;
 //Index of the tiles that have been used in a word
 //This is not used at the moment
 vector<int> foundIndex = {};
+vector<int> found = {};
+vector<int> found2 = {};
+//Declaring the neighbour tiles to every tile.
 vector<int> nolla = { 1,5,4 };
 vector<int> yksi = { 0,4,5,6,2 };
 vector<int> kaksi = { 1,5,6,7,3 };
@@ -25,7 +29,9 @@ vector<int> kaksitoista = { 8,9,13 };
 vector<int> kolmetoista = { 12,8,9,10,14 };
 vector<int> neljatoista = { 13,9,10,11,15 };
 vector<int> viisitoista = { 14,10,11 };
+//A vector with all of the previous vectors
 vector<vector<int>> positions = { nolla,yksi,kaksi,kolme,nelja,viisi,kuusi,seitseman,kahdeksan,seitseman,kahdeksan,yhdeksan,kymmenen,yksitoista,kaksitoista,kolmetoista,neljatoista,viisitoista };
+//A vector for holding the word
 vector<char> word = {};
 vector<char> grid = {};
 vector<int> goodTiles = {};
@@ -45,10 +51,6 @@ void searchGrid(char letter)
 		}
 		gridIndex++;
 	}
-}
-void getIndex()
-{
-	latestIndex = goodTiles[0];
 }
 void showGrid()
 {
@@ -110,7 +112,7 @@ void makeGrid()
 bool existsInRange(vector<int> pos, char target)
 {
 	rangeIndex = 0;
-	bool exists;
+	bool exists = false;
 	foundIndex = {};
 	for (int i : pos)
 	{
@@ -118,20 +120,24 @@ bool existsInRange(vector<int> pos, char target)
 		{
 			latestIndex = i;
 			foundIndex.push_back(pos[rangeIndex]);
+			
 			exists = true;
  		}
-		else
-		{
-			exists = false;
-		}
 		rangeIndex++;
 		
 	}
-
-	return exists;
+	if (exists == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 void stringToVector(string var)
 {
+	word = {};
 	for (char letter : var)
 	{
 		word.push_back(letter);
@@ -143,54 +149,59 @@ void resetWord()
 }
 bool findWord(string toFind)
 {
-	int counter = 0;
+	int foundInt = 0;
 	stringToVector(toFind);
-	searchGrid(word[0]);
-	if (goodTiles.empty()) {
+	searchGrid(word[1]);
+	found2 = {};
+	if (goodTiles.empty())
+	{
+		cout << "ITS EMPTY!!!!" << endl;
 		return false;
 	}
-	else {
-		getIndex();
-		bool doesExist = false;
-		for (char letter : word)
+	cout << "Debug" << endl;
+	
+	
+	for (int tile : goodTiles)
+	{
+		foundInt = 1;
+		cout << "Debug" << endl;
+		latestIndex = tile;
+		for (int i = 1; i <= word.size(); i++)
 		{
-			if (counter != 0)
+			if (existsInRange(positions[latestIndex], word[i - 1]))
 			{
-				if (existsInRange(positions[latestIndex], letter))
-				{
-					latestIndex = counter;
-					cout << "Found letter: " << letter << endl;
-				}
-				else
-				{
-					return false;
-				}
+				cout << "Foundone" << endl;
+				foundInt++;
 			}
-			
-			counter++;
-
 		}
-		return true;
+		if (foundInt == word.size())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
-
 }
+
 int main()
 {
+	int input1;
+	char toFind;
 	makeGrid();
 	showGrid();
-	if (findWord(sana) == true)
+	if (findWord("hello"))
 	{
-		cout << "Found word" << endl;
+		cout << "Found hello" << endl;
 	}
 	else
 	{
-		cout << "Did not find the word" << endl;
+		cout << "Didnt find" << endl;
 	}
-	for (int goodTile : goodTiles)
-	{
-		cout << goodTile << endl;
-	}
-	while (true);
+	while(true) {}
+
+
 }
 
