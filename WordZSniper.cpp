@@ -6,6 +6,8 @@
 using namespace std;
 int index = 0;
 int latestIndex;
+//Index of the tiles that have been used in a word
+//This is not used at the moment
 vector<int> foundIndex = {};
 vector<int> nolla = { 1,5,4 };
 vector<int> yksi = { 0,4,5,6,2 };

@@ -1,1 +1,3 @@
-﻿LINK : fatal error LNK1168: cannot open C:\Users\Käyttäjä\Documents\Visual Studio 2017\Projects\WordZSniper\Debug\WordZSniper.exe for writing
+﻿  WordZSniper.cpp
+  WordZSniper.vcxproj -> C:\Users\Käyttäjä\documents\visual studio 2017\Projects\WordZSniper\Debug\WordZSniper.exe
+  WordZSniper.vcxproj -> C:\Users\Käyttäjä\documents\visual studio 2017\Projects\WordZSniper\Debug\WordZSniper.pdb (Partial PDB)
