@@ -5,6 +5,7 @@
 #include <string>
 using namespace std;
 int index = 0;
+int latestIndex;
 vector<int> foundIndex = {};
 vector<int> nolla = { 1,5,4 };
 vector<int> yksi = { 0,4,5,6,2 };
@@ -43,8 +44,36 @@ void searchGrid(char letter)
 		gridIndex++;
 	}
 }
+void getIndex()
+{
+	latestIndex = goodTiles[0];
+}
+void showGrid()
+{
+	cout << "Here is your grid: " << endl;
+	for (int x = 0; x <= 3; x++)
+	{
+		cout << grid[x];
+	}
+	cout << endl;
+	for (int x = 4; x <= 7; x++)
+	{
+		cout << grid[x];
+	}
+	cout << endl;
+	for (int x = 8; x <= 11; x++)
+	{
+		cout << grid[x];
+	}
+	cout << endl;
+	for (int x = 12; x <= 15; x++)
+	{
+		cout << grid[x];
+	}
+}
 void makeGrid()
 {
+	cout << "Enter the letter and press enter after every letter" << endl;
 	cout << "Please enter the letters for the grid!" << endl;
 	cout << "Row 1: ";
 	for (int count = 1; count <= 4; count++)
@@ -105,11 +134,57 @@ void stringToVector(string var)
 		word.push_back(letter);
 	}
 }
+void resetWord()
+{
+	word = {};
+}
+bool findWord(string toFind)
+{
+	int counter = 0;
+	stringToVector(toFind);
+	searchGrid(word[0]);
+	if (goodTiles.empty()) {
+		return false;
+	}
+	else {
+		getIndex();
+		bool doesExist = false;
+		for (char letter : word)
+		{
+			if (counter != 0)
+			{
+				doesExist = existsInRange(positions[latestIndex], letter);
+				if (doesExist = true)
+				{
+					latestIndex = counter;
+					cout << "Found letter: " << letter << endl;
+				}
+				if (doesExist = false)
+				{
+					return false;
+				}
+			}
+
+			counter++;
+
+		}
+		return true;
+	}
+
+
+}
 int main()
 {
 	makeGrid();
-	stringToVector(sana);
-	searchGrid(word[0]);
+	showGrid();
+	if (findWord(sana) == true)
+	{
+		cout << "Found word" << endl;
+	}
+	else
+	{
+		cout << "Did not find the word" << endl;
+	}
 	for (int goodTile : goodTiles)
 	{
 		cout << goodTile << endl;
