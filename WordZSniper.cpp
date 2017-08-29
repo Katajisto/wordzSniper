@@ -33,25 +33,35 @@ vector<int> viisitoista = { 14,10,11 };
 vector<vector<int>> positions = { nolla,yksi,kaksi,kolme,nelja,viisi,kuusi,seitseman,kahdeksan,seitseman,kahdeksan,yhdeksan,kymmenen,yksitoista,kaksitoista,kolmetoista,neljatoista,viisitoista };
 //A vector for holding the word
 vector<char> word = {};
+//A vector for holding the grid
 vector<char> grid = {};
+//A vector for holding the tiles that hold the starting letter of the word.
 vector<int> goodTiles = {};
-int gridIndex = 0;
+//A string that holds the word, before it is split into chars in a vector
 string sana = "hello";
-int rangeIndex = 0;
+//A temporary place for a char from the grid
 char gridTempChar = ' ';
+//A bool that is used in a function and is also needed (atleast was) elsewhere
 bool rangeBool = false;
+//Search the whole grid for a letter
 void searchGrid(char letter)
 {
-	gridIndex = 0;
+	//Current place in the grid
+	int gridIndex = 0;
+	//For every char in the grid
 	for (char tile : grid)
 	{
+		//if the char is the same as the first letter of the word
 		if (tile == word[0])
 		{
+			//Add it to the vector with all of the tiles containing the first letter
 			goodTiles.push_back(gridIndex);
 		}
+		//Add 1 to the grid index
 		gridIndex++;
 	}
 }
+//Show the grid. Only for UI purposes.
 void showGrid()
 {
 	cout << "Here is your grid: " << endl;
@@ -75,6 +85,7 @@ void showGrid()
 		cout << grid[x];
 	}
 }
+//Get user input for the grid.
 void makeGrid()
 {
 	cout << "Enter the letter and press enter after every letter" << endl;
@@ -108,16 +119,19 @@ void makeGrid()
 	}
 	cout << endl << "Grid set!" << endl;
 }
-
+//Check if a character is in a position in the grid that is listed in a vector
 bool existsInRange(vector<int> pos, char target)
 {
-	rangeIndex = 0;
+	int rangeIndex = 0;
 	bool exists = false;
 	foundIndex = {};
+	//For every position stored in that vector
 	for (int i : pos)
 	{
+		//If the certain characted is in that position in the grid
 		if (grid[i] == target)
 		{
+			//Tell the index of it to the findWord() function
 			latestIndex = i;
 			foundIndex.push_back(pos[rangeIndex]);
 			
@@ -135,6 +149,7 @@ bool existsInRange(vector<int> pos, char target)
 		return false;
 	}
 }
+//Chop up a string into chars and put them into a vector
 void stringToVector(string var)
 {
 	word = {};
@@ -143,31 +158,41 @@ void stringToVector(string var)
 		word.push_back(letter);
 	}
 }
+//Reset the word, not currently used
 void resetWord()
 {
 	word = {};
 }
+/*
+This was the hardest function to write. It finds if a word can be found from the grid.
+*/
 bool findWord(string toFind)
 {
 	int foundInt = 0;
+	//Convert the word into a vector
 	stringToVector(toFind);
-	searchGrid(word[1]);
+	//search the grid for the first letter of that word
+	searchGrid(word[0]);
 	found2 = {};
+	//Making sure that if the first letter doesnt exist in the grid the program doesn't crash
 	if (goodTiles.empty())
 	{
-		cout << "ITS EMPTY!!!!" << endl;
+		//Just for debugging
+		//cout << "ITS EMPTY!!!!" << endl;
 		return false;
 	}
-	cout << "Debug" << endl;
+	//cout << "Debug" << endl;
 	
-	
+	//for every tile that has the first letter in it.
 	for (int tile : goodTiles)
 	{
 		foundInt = 1;
-		cout << "Debug" << endl;
+		//cout << "Debug" << endl;
+		//making sure that it stops searching when all the letters have been found
 		latestIndex = tile;
 		for (int i = 1; i <= word.size(); i++)
 		{
+			//checking if the next letter is next to the current letter
 			if (existsInRange(positions[latestIndex], word[i - 1]))
 			{
 				cout << "Foundone" << endl;
@@ -185,7 +210,7 @@ bool findWord(string toFind)
 	}
 
 }
-
+//Well this main function is just self explanatory.
 int main()
 {
 	int input1;
