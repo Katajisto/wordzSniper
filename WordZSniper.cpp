@@ -34,11 +34,13 @@ vector<vector<int>> positions = { nolla,yksi,kaksi,kolme,nelja,viisi,kuusi,seits
 //A vector for holding the word
 vector<char> word = {};
 //A vector for holding the grid
+//vector<char> grid = {'s','o','s','e','u','a','i','k','a','t','t','l','a','m','v','m'};
 vector<char> grid = {};
 //A vector for holding the tiles that hold the starting letter of the word.
 vector<int> goodTiles = {};
 //A string that holds the word, before it is split into chars in a vector
 string sana = "hello";
+vector<string> sanat = { "soseke" };
 //A temporary place for a char from the grid
 char gridTempChar = ' ';
 //A bool that is used in a function and is also needed (atleast was) elsewhere
@@ -84,6 +86,8 @@ void showGrid()
 	{
 		cout << grid[x];
 	}
+	cout << endl;
+	cout << endl;
 }
 //Get user input for the grid.
 void makeGrid()
@@ -162,6 +166,9 @@ void stringToVector(string var)
 void resetWord()
 {
 	word = {};
+	found = {};
+	found2 = {};
+	goodTiles = {};
 }
 /*
 This was the hardest function to write. It finds if a word can be found from the grid.
@@ -186,6 +193,7 @@ bool findWord(string toFind)
 	//for every tile that has the first letter in it.
 	for (int tile : goodTiles)
 	{
+		cout << "Found a tile with starting letter: " << grid[tile];
 		foundInt = 1;
 		//cout << "Debug" << endl;
 		//making sure that it stops searching when all the letters have been found
@@ -195,12 +203,14 @@ bool findWord(string toFind)
 			//checking if the next letter is next to the current letter
 			if (existsInRange(positions[latestIndex], word[i - 1]))
 			{
-				cout << "Foundone" << endl;
+				cout << "Found letter: " << word[i - 1] << endl;
+				//cout << "Foundone" << endl;
 				foundInt++;
 			}
 		}
 		if (foundInt == word.size())
 		{
+			cout << "Found: " << toFind << endl;
 			return true;
 		}
 		else
@@ -213,19 +223,19 @@ bool findWord(string toFind)
 //Well this main function is just self explanatory.
 int main()
 {
-	int input1;
+	string input1;
 	char toFind;
 	makeGrid();
 	showGrid();
-	if (findWord("hello"))
+	while(true) 
 	{
-		cout << "Found hello" << endl;
+		cout << "Word to find:" << endl;
+		cin >> input1;
+		cout << endl;
+		findWord(input1);
+		resetWord();
+
 	}
-	else
-	{
-		cout << "Didnt find" << endl;
-	}
-	while(true) {}
 
 
 }
