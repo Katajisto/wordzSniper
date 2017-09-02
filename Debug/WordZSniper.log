@@ -1,5 +1,4 @@
 ﻿  WordZSniper.cpp
-c:\users\käyttäjä\documents\visual studio 2017\projects\wordzsniper\wordzsniper\wordzsniper.cpp(202): warning C4018: '<=': signed/unsigned mismatch
-c:\users\käyttäjä\documents\visual studio 2017\projects\wordzsniper\wordzsniper\wordzsniper.cpp(220): warning C4101: 'toFind': unreferenced local variable
+c:\users\käyttäjä\documents\visual studio 2017\projects\wordzsniper\wordzsniper\wordzsniper.cpp(333): warning C4101: 'toFind': unreferenced local variable
   WordZSniper.vcxproj -> C:\Users\Käyttäjä\documents\visual studio 2017\Projects\WordZSniper\Debug\WordZSniper.exe
   WordZSniper.vcxproj -> C:\Users\Käyttäjä\documents\visual studio 2017\Projects\WordZSniper\Debug\WordZSniper.pdb (Partial PDB)
