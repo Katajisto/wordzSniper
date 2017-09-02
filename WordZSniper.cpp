@@ -170,6 +170,7 @@ void resetWord()
 	found2 = {};
 	goodTiles = {};
 }
+
 /*
 This was the hardest function to write. It finds if a word can be found from the grid.
 */
@@ -208,17 +209,9 @@ bool findWord(string toFind)
 				foundInt++;
 			}
 		}
-		if (foundInt == word.size())
-		{
-			cout << "Found: " << toFind << endl;
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
 
+	}
+	return true;
 }
 //Well this main function is just self explanatory.
 int main()
