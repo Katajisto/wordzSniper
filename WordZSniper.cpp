@@ -26,6 +26,7 @@ int latestIndex;
 //Index of the tiles that have been used in a word
 //This is not used at the moment
 vector<int> foundIndex = {};
+vector<int> usedTiles = {};
 vector<int> found = {};
 vector<int> found2 = {};
 //Declaring the neighbour tiles to every tile.
@@ -129,6 +130,28 @@ void showGrid()
 	cout << endl;
 }
 //Get user input for the grid.
+void addToUsed(int x)
+{
+	usedTiles.push_back(x);
+}
+bool isUsed(int x)
+{
+	for (int tile : usedTiles)
+	{
+		if (tile == x)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+void clearUsed()
+{
+	usedTiles = {};
+}
 void makeGrid()
 {
 	cout << "Enter the letter and press enter after every letter" << endl;
@@ -213,6 +236,7 @@ void resetWord()
 //This time it will check if a letter exists, then check if it is in the neighbour vector of the latest tile.
 //It will make the program run slower, but I can probably make it work better.
 //Will probably revisit this program sometime to make the original function work.
+/*
 bool findWord(string toFind)
 {
 	bool foundChar = false;
@@ -249,7 +273,7 @@ bool findWord(string toFind)
 								if (pos == goodPos)
 								{
 									//FOUND THE CHAR 
-									//cout << "Found " << curChar << endl;
+									cout << "Found " << curChar << " at " << pos << endl;
 									tempTile = pos;
 									foundCharacters++;
 									break;
@@ -282,10 +306,11 @@ bool findWord(string toFind)
 		return false;
 	}
 }
+*/
 /*
 This was the hardest function to write. It finds if a word can be found from the grid.
 */
-/*
+
 bool findWord(string toFind)
 {
 	int foundInt = 0;
@@ -307,25 +332,28 @@ bool findWord(string toFind)
 	for (int tile : goodTiles)
 	{
 		cout << "Found a tile with starting letter: " << grid[tile] << endl;
-		foundInt = 1;
+		addToUsed(tile);
+		foundInt = 0;
 		//cout << "Debug" << endl;
 		//making sure that it stops searching when all the letters have been found
 		latestIndex = tile;
-		for (int i = 1; i <= word.size(); i++)
+		for (int i = 0; i < word.size(); i++)
 		{
 			//checking if the next letter is next to the current letter
-			if (existsInRange(positions[latestIndex], word[i - 1]))
+			if (existsInRange(positions[latestIndex], word[i]) && !isUsed(latestIndex))
 			{
-				cout << "Found letter: " << word[i - 1] << " at index " << latestIndex << endl;
+				addToUsed(latestIndex);
+				cout << "Found letter: " << word[i] << " at index " << latestIndex << endl;
 				//cout << "Foundone" << endl;
 				foundInt++;
 			}
 		}
-
+		clearUsed();
+		if (foundInt + 1 == word.size()) { return true; }
 	}
-	return true;
+	return false;
 }
-*/
+
 //Well this main function is just self explanatory.
 int main()
 {
@@ -334,19 +362,7 @@ int main()
 	makeGrid();
 	int i = 0;
 	showGrid();
-	/*
-	for (vector<int> systeemi : positions)
-	{
-		cout << "Here are the pos of vector pos: " << i << endl;
-		for (int pos : systeemi)
-		{
-			cout << pos << ", " << endl;
-		}
-		cout << endl;
-		i++;
-	}
-	*/
-	while(true) 
+	while (true)
 	{
 		cout << "Word to find:" << endl;
 		cin >> input1;
@@ -356,9 +372,6 @@ int main()
 			cout << input1 << endl;
 		}
 		resetWord();
-
 	}
-
-
 }
 
