@@ -1,4 +1,4 @@
-/*
+﻿/*
 		  _______  _______  ______   _______    _______  _       _________ _______  _______  _______
 |\     /|(  ___  )(  ____ )(  __  \ / ___   )  (  ____ \( (    /|\__   __/(  ____ )(  ____ \(  ____ )
 | )   ( || (   ) || (    )|| (  \  )\/   )  |  | (    \/|  \  ( |   ) (   | (    )|| (    \/| (    )|
@@ -63,22 +63,6 @@ vector<int> startPos = {};
 char gridTempChar = ' ';
 //A bool that is used in a function and is also needed (atleast was) elsewhere
 bool rangeBool = false;
-//Search the whole grid for a letter
-bool startSearch()
-{
-	bool didFind = false;
-	int index = 0;
-	for (char letter : grid)
-	{
-		if (letter == word[0])
-		{
-			didFind = true;
-			startPos.push_back(index);
-		}
-	index++;
-	}
-	return didFind;
-}
 bool searchGrid(char letter)
 {
 	//Resetting the goodTiles vector that holds the tiles that share the character reguested
@@ -190,7 +174,6 @@ bool existsInRange(vector<int> pos, char target)
 {
 	int rangeIndex = 0;
 	bool exists = false;
-	foundIndex = {};
 	//For every position stored in that vector
 	for (int i : pos)
 	{
@@ -199,7 +182,7 @@ bool existsInRange(vector<int> pos, char target)
 		{
 			//Tell the index of it to the findWord() function
 			latestIndex = i;
-			foundIndex.push_back(pos[rangeIndex]);
+			foundIndex.push_back(i);
 			
 			exists = true;
  		}
@@ -215,6 +198,10 @@ bool existsInRange(vector<int> pos, char target)
 		return false;
 	}
 }
+void resetFound()
+{
+	foundIndex = {};
+}
 //Chop up a string into chars and put them into a vector
 void stringToVector(string var)
 {
@@ -229,13 +216,13 @@ void resetWord()
 {
 	word = {};
 	found = {};
+	foundIndex = {};
+	clearUsed();
 	found2 = {};
 	goodTiles = {};
 }
-//Redoing the findWord fuction to use new logic
-//This time it will check if a letter exists, then check if it is in the neighbour vector of the latest tile.
-//It will make the program run slower, but I can probably make it work better.
-//Will probably revisit this program sometime to make the original function work.
+//The second findWord function that I wrote, it ended up being useless due to it being slower, and it was written due to a bug I tought was in the findWord() function,
+//but the bug ended up being in the positions vector, it was a small typo (╯°□°）╯︵ ┻━┻
 /*
 bool findWord(string toFind)
 {
@@ -314,6 +301,7 @@ This was the hardest function to write. It finds if a word can be found from the
 bool findWord(string toFind)
 {
 	int foundInt = 0;
+	vector<int> tempFoundIndex;
 	//Convert the word into a vector
 	stringToVector(toFind);
 	//search the grid for the first letter of that word
@@ -337,15 +325,19 @@ bool findWord(string toFind)
 		//cout << "Debug" << endl;
 		//making sure that it stops searching when all the letters have been found
 		latestIndex = tile;
+		foundIndex.push_back(tile);
 		for (int i = 0; i < word.size(); i++)
 		{
-			//checking if the next letter is next to the current letter
-			if (existsInRange(positions[latestIndex], word[i]) && !isUsed(latestIndex))
-			{
-				addToUsed(latestIndex);
-				cout << "Found letter: " << word[i] << " at index " << latestIndex << endl;
-				//cout << "Foundone" << endl;
-				foundInt++;
+			tempFoundIndex = foundIndex;
+			resetFound();
+			//cout << tempFoundIndex.size() << endl;
+				if (existsInRange(positions[latestIndex], word[i]) && !isUsed(latestIndex))
+				{
+					addToUsed(latestIndex);
+					cout << "Found letter: " << word[i] << " at index " << latestIndex << endl;
+					//cout << "Foundone" << endl;
+					foundInt++;
+	
 			}
 		}
 		clearUsed();
