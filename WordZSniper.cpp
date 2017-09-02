@@ -249,7 +249,7 @@ bool findWord(string toFind)
 								if (pos == goodPos)
 								{
 									//FOUND THE CHAR 
-									cout << "Found " << curChar << endl;
+									//cout << "Found " << curChar << endl;
 									tempTile = pos;
 									foundCharacters++;
 									break;
@@ -270,7 +270,7 @@ bool findWord(string toFind)
 			}
 			if (foundCharacters + 1 == word.size())
 			{
-				cout << "Found this many characters: " << foundCharacters << endl;
+				//cout << "Found this many characters: " << foundCharacters << endl;
 				return true;
 			}
 		}
