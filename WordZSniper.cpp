@@ -184,6 +184,7 @@ bool betterFind(string target)
 	if (word.size() > 10)
 	{
 		cout << "Sorry, sanajahti (wordZ) does not support words that are larger than 10" << endl;
+		return false;
 	}
 	for (int tile1 : goodTiles)
 	{
