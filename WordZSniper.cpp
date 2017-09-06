@@ -26,7 +26,9 @@ It finds words in a 4 x 4 grid.
 */
 #include "stdafx.h"
 #include "iostream"
+#include <algorithm>
 #include <vector>
+#include <fstream>
 #include <string>
 using namespace std;
 int index = 0;
@@ -312,20 +314,44 @@ bool betterFind(string target)
 //Well this main function is just self explanatory.
 int main()
 {
+	std::string temp;
+	vector<string> foundWords = {};
 	string input1;
 	char toFind;
 	makeGrid();
 	int i = 0;
 	showGrid();
-	while (true)
+	std::ifstream file("dictionary_fin.katajisto");
+	while (std::getline(file, temp))
 	{
-		cout << "Word to find:" << endl;
-		cin >> input1;
-		cout << endl;
-		if (betterFind(input1) == true)
+		if (betterFind(temp) == true)
 		{
-			cout << input1 << endl;
+			foundWords.push_back(temp);
 		}
-		resetWord();
 	}
+	struct compare {
+		bool operator()(const std::string& first, const std::string& second) {
+			return first.size() < second.size();
+		}
+	};
+	compare c;
+	std::sort(foundWords.begin(), foundWords.end(), c);
+	for (string foundWord : foundWords)
+	{
+		cout << foundWord << endl;
+	}
+	cout << "Ready!" << endl;
+	cout << "Do you want to find words in a new grid? (y/N): ";
+	char input2;
+	cin >> input2;
+	while (true) {
+		switch (input2)
+		{
+		case('y' || 'Y'):
+			main();
+		default:
+			return 0;
+		}
+	}
+	
 }
