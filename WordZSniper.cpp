@@ -27,12 +27,14 @@ It finds words in a 4 x 4 grid.
 #include "stdafx.h"
 #include "iostream"
 #include <algorithm>
+#include <chrono>
 #include <vector>
 #include <fstream>
 #include <string>
 using namespace std;
 int index = 0;
 int latestIndex;
+bool isFirstRun = true;
 vector<int> foundIndex = {};
 vector<int> usedTiles = {};
 vector<int> nolla = { 1,5,4 };
@@ -143,6 +145,7 @@ void stringToVector(string var)
 }
 void resetWord()
 {
+	grid = {};
 	word = {};
 	goodTiles = {};
 }
@@ -183,11 +186,6 @@ bool betterFind(string target)
 	vector<int> j = {};
 	vector<int> k = {};
 	searchGrid(word[0]);
-	if (word.size() > 10)
-	{
-		cout << "Sorry, sanajahti (wordZ) does not support words that are larger than 10" << endl;
-		return false;
-	}
 	for (int tile1 : goodTiles)
 	{
 		a = {};
@@ -314,6 +312,18 @@ bool betterFind(string target)
 //Well this main function is just self explanatory.
 int main()
 {
+	if (isFirstRun)
+	{
+		cout << "Welcome to Sanajahti Sniper!" << endl;
+		cout << "Programmed by Tuomas Katajisto" << endl;
+		cout << "-------------------------------" << endl;
+		cout << "Instructions: " << endl;
+		cout << "The program will ask you for the rows of the grid, you can enter the whole grid at a time, or one row at a time." << endl;
+		cout << "Please use \" for ä, and @ for ö, if you can't see the letters look at the readme file." << endl;
+		cout << "DISCLAIMER: Please don't ruin the leaderboards with this, it's no fun" << endl;
+	}
+	::std::locale d_Locale2("swedish");
+	::std::locale::global(d_Locale2);
 	std::string temp;
 	vector<string> foundWords = {};
 	string input1;
@@ -321,6 +331,7 @@ int main()
 	makeGrid();
 	int i = 0;
 	showGrid();
+	auto start = std::chrono::steady_clock::now();
 	std::ifstream file("dictionary_fin.katajisto");
 	while (std::getline(file, temp))
 	{
@@ -340,18 +351,22 @@ int main()
 	{
 		cout << foundWord << endl;
 	}
+	auto finish = std::chrono::steady_clock::now();
+	cout << "Done!" << endl;
+	double elapsed_seconds = std::chrono::duration_cast<std::chrono::duration<double>>(finish - start).count();
+	std::cout << elapsed_seconds << endl;
 	cout << "Ready!" << endl;
 	cout << "Do you want to find words in a new grid? (y/N): ";
 	char input2;
 	cin >> input2;
-	while (true) {
-		switch (input2)
-		{
-		case('y' || 'Y'):
-			main();
-		default:
-			return 0;
-		}
+	if(input2 == 'y' || input2 == 'Y')
+	{
+		resetWord();
+		main();
+	}
+	else
+	{
+		return 0;
 	}
 	
 }
