@@ -1,6 +1,8 @@
-﻿  Generating code
-  0 of 620 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    24 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  WordZSniper.vcxproj -> C:\Users\Käyttäjä\Documents\Visual Studio 2017\Projects\WordZSniper\Release\WordZSniper.exe
+﻿  WordZSniper.cpp
+WordZSniper.cpp(331): warning C4101: 'toFind': unreferenced local variable
+  
+WordZSniper.rc(26): error RC2135: file not found: D:\sanajahtisniper.png
+  
+  
+WordZSniper.rc(36): error RC2135: file not found: D:\sanajahtisniper.ico
+  

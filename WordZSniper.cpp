@@ -322,6 +322,7 @@ int main()
 		cout << "Please use \" for ä, and @ for ö, if you can't see the letters look at the readme file." << endl;
 		cout << "DISCLAIMER: Please don't ruin the leaderboards with this, it's no fun" << endl;
 	}
+	isFirstRun = false;
 	::std::locale d_Locale2("swedish");
 	::std::locale::global(d_Locale2);
 	std::string temp;
