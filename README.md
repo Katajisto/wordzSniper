@@ -1,7 +1,6 @@
 # wordzSniper
 
-!! THIS APPLICATION IS A WORK IN PROGRESS PROJECT !!
+I am wrote a blog about this project at ktj.st! You can also find the pre-built project there. 
 
-I am writing a blog about its progress at ktj.st 
-
-When ready it will find words in a 4x4 character grid, used by a mobile game called wordZ.
+The program will not work without the dictionary, you need to download that from the blog (The dictionary is in Finnish). 
+You need to provide your own dictionary if you want to use this with anything else than the Finnish sanajahti.
